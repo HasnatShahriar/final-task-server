@@ -1,14 +1,19 @@
 const express = require('express');
-const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
-
 const app = express();
+const cors = require('cors');
+
+
+
 const port = process.env.PORT || 3000;
 
 // CORS configuration
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin:[ "http://localhost:5173","https://pro-product-c9cc2.web.app","https://pro-product-c9cc2.firebaseapp.com"],credentials:true,methods:["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+
+ }));
+app.use(express.json());
 
 // MongoDB connection setup
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://product:ZBXP6A33pkU7FJoI@cluster0.rne3uly.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const client = new MongoClient(uri, {
   serverApi: { version: ServerApiVersion.v1, strict: true, deprecationErrors: true },
@@ -16,7 +21,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    await client.connect();
+    // await client.connect();
     
     const database = client.db("product");
     const productCollection = database.collection("Products");
@@ -32,7 +37,7 @@ async function run() {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 10;
       const skip = (page - 1) * limit;
-      
+      console.log('catagori',category,'brand',brand)
       
 
       const query = {
@@ -41,7 +46,7 @@ async function run() {
         ...(brand && { brand: brand }),
         ...(priceRange.length === 2 && { price: { $gte: priceRange[0], $lte: priceRange[1] } }),
       };
-    
+      console.log(query)
 
       try {
         const products = await productCollection.find(query)
