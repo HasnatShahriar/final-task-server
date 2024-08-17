@@ -33,6 +33,7 @@ async function run() {
       const limit = parseInt(req.query.limit) || 10;
       const skip = (page - 1) * limit;
       
+      
 
       const query = {
         productName: { $regex: search, $options: 'i' },
@@ -40,6 +41,7 @@ async function run() {
         ...(brand && { brand: brand }),
         ...(priceRange.length === 2 && { price: { $gte: priceRange[0], $lte: priceRange[1] } }),
       };
+    
 
       try {
         const products = await productCollection.find(query)
