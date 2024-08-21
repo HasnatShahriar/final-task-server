@@ -3,18 +3,17 @@ const app = express();
 const cors = require('cors');
 
 
-
 const port = process.env.PORT || 3000;
 
 // CORS configuration
-app.use(cors({ origin:[ "http://localhost:5173","https://pro-product-c9cc2.web.app","https://pro-product-c9cc2.firebaseapp.com"],credentials:true,methods:["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+app.use(cors({ origin:[ "http://localhost:5173"],credentials:true,methods:["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
 
  }));
 app.use(express.json());
 
 // MongoDB connection setup
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://product:ZBXP6A33pkU7FJoI@cluster0.rne3uly.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = "mongodb+srv://product:knnZCSAeMj47scjP@cluster0.ihpbk8d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const client = new MongoClient(uri, {
   serverApi: { version: ServerApiVersion.v1, strict: true, deprecationErrors: true },
 });
@@ -24,8 +23,8 @@ async function run() {
     // await client.connect();
     
     const database = client.db("product");
-    const productCollection = database.collection("Products");
-
+    const productCollection = database.collection("products");
+    console.log(productCollection);
     // Define route to fetch products with filters, sorting, and pagination
     app.get('/products', async (req, res) => {
       const search = req.query.search || '';
