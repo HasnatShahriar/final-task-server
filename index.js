@@ -6,7 +6,7 @@ const cors = require('cors');
 const port = process.env.PORT || 3000;
 
 // CORS configuration
-app.use(cors({ origin:[ "http://localhost:5173"],credentials:true,methods:["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+app.use(cors({ origin:[ "http://localhost:5173","https://myproducts-2024.netlify.app"],credentials:true,methods:["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
 
  }));
 app.use(express.json());
